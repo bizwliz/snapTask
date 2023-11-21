@@ -11,11 +11,11 @@ export const LOGIN = gql`
   }
 `;
 
-export const ADD_ORDER = gql`
-  mutation addOrder($products: [ID]!) {
-    addOrder(products: $products) {
+export const ADD_TASK = gql`
+  mutation addTask($snaps: [ID]!) {
+    addOrder(snaps: $snaps) {
       purchaseDate
-      products {
+      snaps {
         _id
         name
         description

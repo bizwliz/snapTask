@@ -1,51 +1,61 @@
+// Import your updated action types
 import {
-  UPDATE_PRODUCTS,
+  UPDATE_TASKS, 
+  UPDATE_CURRENT_TASK,
+  UPDATE_SNAPS,
+  UPDATE_CURRENT_SNAPS,
   ADD_TO_CART,
-  UPDATE_CART_QUANTITY,
-  REMOVE_FROM_CART,
   ADD_MULTIPLE_TO_CART,
-  UPDATE_CATEGORIES,
-  UPDATE_CURRENT_CATEGORY,
+  REMOVE_FROM_CART,
   CLEAR_CART,
-  TOGGLE_CART
+  UPDATE_CART_QUANTITY,
+  TOGGLE_CART,
+  UPDATE_DEPARTMENTS,
+  UPDATE_CURRENT_DEPARTMENT,
 } from "./actions";
 
 export const reducer = (state, action) => {
   switch (action.type) {
-    case UPDATE_PRODUCTS:
+    case UPDATE_SNAPS:
       return {
         ...state,
-        products: [...action.products],
+        snaps: [action.snap],
+      };
+
+      case UPDATE_CURRENT_SNAPS: 
+      return {
+        ...state,
+        currentSnap: action.currentSnap
       };
 
     case ADD_TO_CART:
       return {
         ...state,
         cartOpen: true,
-        cart: [...state.cart, action.product],
+        cart: [...state.cart, action.snap],
       };
 
     case ADD_MULTIPLE_TO_CART:
       return {
         ...state,
-        cart: [...state.cart, ...action.products],
+        cart: [...state.cart, ...action.snaps],
       };
 
     case UPDATE_CART_QUANTITY:
       return {
         ...state,
         cartOpen: true,
-        cart: state.cart.map(product => {
-          if (action._id === product._id) {
-            product.purchaseQuantity = action.purchaseQuantity
+        cart: state.cart.map(snap => {
+          if (action._id === snap._id) {
+            snap.purchaseQuantity = action.purchaseQuantity
           }
-          return product
+          return snap;
         })
       };
 
     case REMOVE_FROM_CART:
-      let newState = state.cart.filter(product => {
-        return product._id !== action._id;
+      let newState = state.cart.filter(snap => {
+        return snap._id !== action._id;
       });
 
       return {
@@ -67,16 +77,28 @@ export const reducer = (state, action) => {
         cartOpen: !state.cartOpen
       };
 
-    case UPDATE_CATEGORIES:
+    case UPDATE_DEPARTMENTS:
       return {
         ...state,
-        categories: [...action.categories],
+        departments: [...action.departments],
       };
 
-    case UPDATE_CURRENT_CATEGORY:
+    case UPDATE_CURRENT_DEPARTMENT:
       return {
         ...state,
-        currentCategory: action.currentCategory
+        currentDepartment: action.currentDepartment
+      };
+
+      case UPDATE_TASKS:  // Add UPDATE_TASKS
+      return {
+        ...state,
+        tasks: [...action.tasks],
+      };
+
+    case UPDATE_CURRENT_TASK:  // Add UPDATE_CURRENT_TASK
+      return {
+        ...state,
+        currentTask: action.currentTask
       }
 
     default:

@@ -2,19 +2,19 @@ const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
 
-const orderSchema = new Schema({
+const taskSchema = new Schema({
   purchaseDate: {
     type: Date,
     default: Date.now
   },
-  products: [
+  snaps: [
     {
       type: Schema.Types.ObjectId,
-      ref: 'Product'
+      ref: 'Snap'
     }
   ]
 });
 
-const Order = mongoose.model('Order', orderSchema);
+const Task = mongoose.model('Task', taskSchema);
 
-module.exports = Order;
+module.exports = Task;
