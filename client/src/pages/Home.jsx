@@ -3,7 +3,7 @@ import DepartmentMenu from "../components/DepartmentMenu";
 import Cart from "../components/Cart";
 
 const Home = () => {
-  return (
+  return(
     <div className="container">
       <DepartmentMenu />
       <SnapList />
