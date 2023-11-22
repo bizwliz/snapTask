@@ -7,6 +7,7 @@ db.once('open', async () => {
   await cleanDB('Snap', 'snaps');
   await cleanDB('User', 'users');
 
+  
   const departments = await Department.insertMany([
     { name: 'Food' },
     { name: 'Household Supplies' },
