@@ -1,57 +1,25 @@
-import Auth from "../../utils/auth";
-import { Link } from "react-router-dom";
+import React from "react";
+import "./nav.css";
+
 
 function Nav() {
+      return (
+        <>
+        <header>
+        <img id="logo"src="logo.png"></img>
+        <nav>
+          <ul>
+            <li><a href="#about">Create Project</a></li>
+            <li><a href="#portfolio">Select Project</a></li>
+            <li><a href="#contact">Login/SignUp</a></li>
+            <li><a> Search</a></li>
+          </ul>
+        </nav>
+      </header>
+      </>
+      );
 
-  function showNavigation() {
-    if (Auth.loggedIn()) {
-      return (
-        <ul className="flex-row">
-          <li className="mx-1">
-            <Link to="/orderHistory">
-              Task History
-            </Link>
-          </li>
-          <li className="mx-1">
-            {/* this is not using the Link component to logout or user and then refresh the application to the start */}
-            <a href="/" onClick={() => Auth.logout()}>
-              Logout
-            </a>
-          </li>
-        </ul>
-      );
-    } else {
-      return (
-        <ul className="flex-row">
-          <li className="mx-1">
-            <Link to="/signup">
-              Signup
-            </Link>
-          </li>
-          <li className="mx-1">
-            <Link to="/login">
-              Login
-            </Link>
-          </li>
-        </ul>
-      );
-    }
   }
 
-  return (
-    <header className="flex-row px-1">
-      <h1>
-        <Link to="/">
-          <span role="img" aria-label="shopping bag">🛍️</span>
-          -Shop-Shop
-        </Link>
-      </h1>
-
-      <nav>
-        {showNavigation()}
-      </nav>
-    </header>
-  );
-}
 
 export default Nav;

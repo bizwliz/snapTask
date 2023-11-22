@@ -9,12 +9,12 @@ import NoMatch from './pages/NoMatch';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Success from './pages/Success';
-import TaskHistory from './pages/TaskHistory';
+import OrderHistory from './pages/OrderHistory';
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <App />,
+    element: <Signup />,
     error: <NoMatch />,
     children: [
       {
@@ -31,9 +31,9 @@ const router = createBrowserRouter([
         element: <Success />
       }, {
         path: '/orderHistory',
-        element: <TaskHistory />
+        element: <OrderHistory />
       }, {
-        path: '/snaps/:id',
+        path: '/products/:id',
         element: <Detail />
       }
     ]

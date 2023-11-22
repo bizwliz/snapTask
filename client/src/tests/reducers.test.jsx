@@ -1,18 +1,18 @@
 import { reducer } from '../utils/reducers';
 import {
-  UPDATE_SNAPS,
+  UPDATE_PRODUCTS,
   ADD_TO_CART,
   UPDATE_CART_QUANTITY,
   REMOVE_FROM_CART,
   ADD_MULTIPLE_TO_CART,
-  UPDATE_DEPARTMENTS,
-  UPDATE_CURRENT_DEPARTMENT,
+  UPDATE_CATEGORIES,
+  UPDATE_CURRENT_CATEGORY,
   CLEAR_CART,
   TOGGLE_CART
 } from '../utils/actions';
 
 const initialState = {
-  snaps: [],
+  products: [],
   cart: [
     {
       _id: '1',
@@ -26,24 +26,24 @@ const initialState = {
     }
   ],
   cartOpen: false,
-  departments: [{ name: 'Food' }],
-  currentDepartment: '1',
+  categories: [{ name: 'Food' }],
+  currentCategory: '1',
 };
 
-test('UPDATE_SNAPS', () => {
+test('UPDATE_PRODUCTS', () => {
   let newState = reducer(initialState, {
-    type: UPDATE_SNAPS,
-    snaps: [{}, {}]
+    type: UPDATE_PRODUCTS,
+    products: [{}, {}]
   });
 
-  expect(newState.snaps.length).toBe(2);
-  expect(initialState.snaps.length).toBe(0);
+  expect(newState.products.length).toBe(2);
+  expect(initialState.products.length).toBe(0);
 });
 
 test('ADD_TO_CART', () => {
   let newState = reducer(initialState, {
     type: ADD_TO_CART,
-    snap: { purchaseQuantity: 1 }
+    product: { purchaseQuantity: 1 }
   });
 
   expect(newState.cart.length).toBe(3);
@@ -87,31 +87,31 @@ test('REMOVE_FROM_CART', () => {
 test('ADD_MULTIPLE_TO_CART', () => {
   let newState = reducer(initialState, {
     type: ADD_MULTIPLE_TO_CART,
-    snaps: [{}, {}]
+    products: [{}, {}]
   });
 
   expect(newState.cart.length).toBe(4);
   expect(initialState.cart.length).toBe(2);
 });
 
-test('UPDATE_DEPARTMENTS', () => {
+test('UPDATE_CATEGORIES', () => {
   let newState = reducer(initialState, {
-    type: UPDATE_DEPARTMENTS,
-    departments: [{}, {}]
+    type: UPDATE_CATEGORIES,
+    categories: [{}, {}]
   });
 
-  expect(newState.departments.length).toBe(2);
-  expect(initialState.departments.length).toBe(1);
+  expect(newState.categories.length).toBe(2);
+  expect(initialState.categories.length).toBe(1);
 });
 
-test('UPDATE_CURRENT_DEPARTMENT', () => {
+test('UPDATE_CURRENT_CATEGORY', () => {
   let newState = reducer(initialState, {
-    type: UPDATE_CURRENT_DEPARTMENT,
-    currentDepartment: '2'
+    type: UPDATE_CURRENT_CATEGORY,
+    currentCategory: '2'
   });
 
-  expect(newState.currentDepartment).toBe('2');
-  expect(initialState.currentDepartment).toBe('1');
+  expect(newState.currentCategory).toBe('2');
+  expect(initialState.currentCategory).toBe('1');
 });
 
 test('CLEAR_CART', () => {
