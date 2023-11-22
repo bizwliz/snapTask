@@ -1,15 +1,15 @@
 import { gql } from '@apollo/client';
 
-export const QUERY_SNAPS = gql`
-  query getSnaps($department: ID) {
-    snaps(department: $department) {
+export const QUERY_PRODUCTS = gql`
+  query getProducts($category: ID) {
+    products(category: $category) {
       _id
       name
       description
       price
       quantity
       image
-      department {
+      category {
         _id
       }
     }
@@ -17,31 +17,31 @@ export const QUERY_SNAPS = gql`
 `;
 
 export const QUERY_CHECKOUT = gql`
-  query getCheckout($snaps: [SnapInput]) {
-    checkout(snaps: $snaps) {
+  query getCheckout($products: [ProductInput]) {
+    checkout(products: $products) {
       session
     }
   }
 `;
 
-export const QUERY_ALL_SNAPS = gql`
+export const QUERY_ALL_PRODUCTS = gql`
   {
-    snaps {
+    products {
       _id
       name
       description
       price
       quantity
-      department {
+      category {
         name
       }
     }
   }
 `;
 
-export const QUERY_DEPARTMENTS = gql`
+export const QUERY_CATEGORIES = gql`
   {
-    departments {
+    categories {
       _id
       name
     }
@@ -53,10 +53,10 @@ export const QUERY_USER = gql`
     user {
       firstName
       lastName
-      tasks {
+      orders {
         _id
         purchaseDate
-        snaps {
+        products {
           _id
           name
           description
