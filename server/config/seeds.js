@@ -9,6 +9,8 @@ db.once('open', async () => {
 
 
 
+
+
   
   const departments = await Department.insertMany([
     { name: 'Food' },
