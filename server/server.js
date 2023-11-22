@@ -28,7 +28,7 @@ const startApolloServer = async () => {
     context: authMiddleware
   }));
 
-  if (process.env.NODE_ENV === 'production') {
+  if (process.env.NODE_ENV === 'snapion') {
     app.use(express.static(path.join(__dirname, '../client/dist')));
 
     app.get('*', (req, res) => {

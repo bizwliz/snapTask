@@ -9,7 +9,7 @@ import NoMatch from './pages/NoMatch';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Success from './pages/Success';
-import OrderHistory from './pages/OrderHistory';
+import TaskHistory from './pages/TaskHistory';
 
 const router = createBrowserRouter([
   {
@@ -31,9 +31,9 @@ const router = createBrowserRouter([
         element: <Success />
       }, {
         path: '/orderHistory',
-        element: <OrderHistory />
+        element: <TaskHistory />
       }, {
-        path: '/products/:id',
+        path: '/snaps/:id',
         element: <Detail />
       }
     ]

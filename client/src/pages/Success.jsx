@@ -5,18 +5,18 @@ import { ADD_ORDER } from '../utils/mutations';
 import { idbPromise } from '../utils/helpers';
 
 function Success() {
-  const [addOrder] = useMutation(ADD_ORDER);
+  const [addTask] = useMutation(ADD_ORDER);
 
   useEffect(() => {
-    async function saveOrder() {
+    async function saveTask() {
       const cart = await idbPromise('cart', 'get');
-      const products = cart.map((item) => item._id);
+      const snaps = cart.map((item) => item._id);
 
-      if (products.length) {
-        const { data } = await addOrder({ variables: { products } });
-        const productData = data.addOrder.products;
+      if (snaps.length) {
+        const { data } = await addTask({ variables: { snaps } });
+        const snapData = data.addTask.snaps;
 
-        productData.forEach((item) => {
+        snapData.forEach((item) => {
           idbPromise('cart', 'delete', item);
         });
       }
@@ -26,8 +26,8 @@ function Success() {
       }, 3000);
     }
 
-    saveOrder();
-  }, [addOrder]);
+    saveTask();
+  }, [addTask]);
 
   return (
     <div>

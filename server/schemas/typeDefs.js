@@ -1,23 +1,23 @@
 const typeDefs = `
-  type Category {
+  type Department {
     _id: ID
     name: String
   }
 
-  type Product {
+  type Snap {
     _id: ID
     name: String
     description: String
     image: String
     quantity: Int
     price: Float
-    category: Category
+    department: Department
   }
 
-  type Order {
+  type Task {
     _id: ID
     purchaseDate: String
-    products: [Product]
+    snaps: [Snap]
   }
 
   type User {
@@ -25,7 +25,7 @@ const typeDefs = `
     firstName: String
     lastName: String
     email: String
-    orders: [Order]
+    tasks: [Task]
   }
 
   type Checkout {
@@ -37,7 +37,7 @@ const typeDefs = `
     user: User
   }
 
-  input ProductInput {
+  input SnapInput {
     _id: ID
     purchaseQuantity: Int
     name: String
@@ -47,19 +47,19 @@ const typeDefs = `
   }
 
   type Query {
-    categories: [Category]
-    products(category: ID, name: String): [Product]
-    product(_id: ID!): Product
+    departments: [Department]
+    snaps(department: ID, name: String): [Snap]
+    snap(_id: ID!): Snap
     user: User
-    order(_id: ID!): Order
-    checkout(products: [ProductInput]): Checkout
+    task(_id: ID!): Task
+    checkout(snaps: [SnapInput]): Checkout
   }
 
   type Mutation {
     addUser(firstName: String!, lastName: String!, email: String!, password: String!): Auth
-    addOrder(products: [ID]!): Order
+    addTask(snaps: [ID]!): Task
     updateUser(firstName: String, lastName: String, email: String, password: String): User
-    updateProduct(_id: ID!, quantity: Int!): Product
+    updateSnap(_id: ID!, quantity: Int!): Snap
     login(email: String!, password: String!): Auth
   }
 `;

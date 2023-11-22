@@ -7,14 +7,14 @@ const orderSchema = new Schema({
     type: Date,
     default: Date.now
   },
-  products: [
+  snaps: [
     {
       type: Schema.Types.ObjectId,
-      ref: 'Product'
+      ref: 'Snap'
     }
   ]
 });
 
-const Order = mongoose.model('Order', orderSchema);
+const Task = mongoose.model('Task', orderSchema);
 
-module.exports = Order;
+module.exports = Task;

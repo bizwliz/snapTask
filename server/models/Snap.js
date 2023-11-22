@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
 
-const productSchema = new Schema({
+const snapSchema = new Schema({
   name: {
     type: String,
     required: true,
@@ -24,13 +24,13 @@ const productSchema = new Schema({
     min: 0,
     default: 0
   },
-  category: {
+  department: {
     type: Schema.Types.ObjectId,
-    ref: 'Category',
+    ref: 'Department',
     required: true
   }
 });
 
-const Product = mongoose.model('Product', productSchema);
+const Snap = mongoose.model('Snap', snapSchema);
 
-module.exports = Product;
+module.exports = Snap;
