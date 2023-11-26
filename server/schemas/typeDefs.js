@@ -1,66 +1,47 @@
 const typeDefs = `
-  type Department {
-    _id: ID
-    name: String
-  }
-
-  type Snap {
-    _id: ID
-    name: String
-    description: String
-    image: String
-    quantity: Int
-    price: Float
-    department: Department
-  }
-
-  type Task {
-    _id: ID
-    purchaseDate: String
-    snaps: [Snap]
-  }
-
   type User {
     _id: ID
-    firstName: String
-    lastName: String
+    username: String
     email: String
-    tasks: [Task]
+    password: String
+    thoughts: [Thought]!
   }
 
-  type Checkout {
-    session: ID
+  type Thought {
+    _id: ID
+    thoughtText: String
+    thoughtAuthor: String
+    createdAt: String
+    comments: [Comment]!
+  }
+
+  type Comment {
+    _id: ID
+    commentText: String
+    commentAuthor: String
+    createdAt: String
   }
 
   type Auth {
-    token: ID
+    token: ID!
     user: User
-  }
-
-  input SnapInput {
-    _id: ID
-    purchaseQuantity: Int
-    name: String
-    image: String
-    price: Float
-    quantity: Int
   }
 
   type Query {
-    departments: [Department]
-    snaps(department: ID, name: String): [Snap]
-    snap(_id: ID!): Snap
-    user: User
-    task(_id: ID!): Task
-    checkout(snaps: [SnapInput]): Checkout
+    users: [User]
+    user(username: String!): User
+    thoughts(username: String): [Thought]
+    thought(thoughtId: ID!): Thought
+    me: User
   }
 
   type Mutation {
-    addUser(firstName: String!, lastName: String!, email: String!, password: String!): Auth
-    addTask(snaps: [ID]!): Task
-    updateUser(firstName: String, lastName: String, email: String, password: String): User
-    updateSnap(_id: ID!, quantity: Int!): Snap
+    addUser(username: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
+    addThought(thoughtText: String!): Thought
+    addComment(thoughtId: ID!, commentText: String!): Thought
+    removeThought(thoughtId: ID!): Thought
+    removeComment(thoughtId: ID!, commentId: ID!): Thought
   }
 `;
 
