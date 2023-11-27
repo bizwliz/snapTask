@@ -1,24 +1,22 @@
-import ReactDOM from 'react-dom/client'
-import './index.css'
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import ReactDOM from 'react-dom/client';
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import App from './App.jsx';
 import Home from './pages/Home';
-import Detail from './pages/Detail';
-import NoMatch from './pages/NoMatch';
-import Login from './pages/Login';
 import Signup from './pages/Signup';
-import Success from './pages/Success';
-import OrderHistory from './pages/OrderHistory';
+import Login from './pages/Login';
+import SingleThought from './pages/SingleThought';
+import Profile from './pages/Profile';
+import ErrorPage from './pages/ErrorPage';
 
 const router = createBrowserRouter([
   {
-    path: '/',
-    element: <Signup />,
-    error: <NoMatch />,
+    path: "/",
+    element: <App />,
+    errorElement: <ErrorPage />,
     children: [
       {
-        index: true, 
+        index: true,
         element: <Home />
       }, {
         path: '/login',
@@ -27,17 +25,17 @@ const router = createBrowserRouter([
         path: '/signup',
         element: <Signup />
       }, {
-        path: '/success',
-        element: <Success />
+        path: '/profiles/:username',
+        element: <Profile />
       }, {
-        path: '/orderHistory',
-        element: <OrderHistory />
+        path: '/me',
+        element: <Profile />
       }, {
-        path: '/products/:id',
-        element: <Detail />
+        path: '/thoughts/:thoughtId',
+        element: <SingleThought />
       }
     ]
-  }
+  },
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
