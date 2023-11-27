@@ -21,14 +21,11 @@ const startApolloServer = async () => {
   app.use(express.urlencoded({ extended: false }));
   app.use(express.json());
 
-  // Serve up static assets
-  app.use('/images', express.static(path.join(__dirname, '../client/images')));
-
   app.use('/graphql', expressMiddleware(server, {
     context: authMiddleware
   }));
 
-  if (process.env.NODE_ENV === 'snapion') {
+  if (process.env.NODE_ENV === 'production') {
     app.use(express.static(path.join(__dirname, '../client/dist')));
 
     app.get('*', (req, res) => {
@@ -45,4 +42,4 @@ const startApolloServer = async () => {
 };
 
 // Call the async function to start the server
-startApolloServer();
+  startApolloServer();

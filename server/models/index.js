@@ -1,6 +1,4 @@
 const User = require('./User');
-const Snap = require('./Snap');
-const Department = require('./Department');
-const Task = require('./Task');
+const Thought = require('./Thought');
 
-module.exports = { User, Snap, Department, Task };
+module.exports = { User, Thought };
