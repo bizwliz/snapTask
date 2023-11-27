@@ -25,18 +25,21 @@ const authLink = setContext((_, { headers }) => {
 });
 
 const client = new ApolloClient({
-  link: authLink.concat(httpLink),
+  uri: authLink.concat(httpLink),
   cache: new InMemoryCache(),
 });
 
 function App() {
+console.log(client)
+
   return (
-    <ApolloProvider client={client}>
-      <StoreProvider>
-        <Nav />
-        <Outlet />
-      </StoreProvider>
-    </ApolloProvider>
+    // <ApolloProvider client={client}>
+    //   <StoreProvider>
+    //     <Nav />
+    //     <Outlet />
+    //   </StoreProvider>
+    // </ApolloProvider>
+    <div> </div>
   );
 }
 
