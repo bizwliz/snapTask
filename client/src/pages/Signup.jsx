@@ -1,100 +1,54 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React from "react";
+import ReactDOM from "react-dom";
+import * as Components from "../components/Components";
+import "./signup.css"
 
-import { useMutation } from '@apollo/client';
-import { ADD_USER } from '../utils/mutations';
-
-import Auth from '../utils/auth';
-
-const Signup = () => {
-  const [formState, setFormState] = useState({
-    username: '',
-    email: '',
-    password: '',
-  });
-  const [addUser, { error, data }] = useMutation(ADD_USER);
-
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-
-    setFormState({
-      ...formState,
-      [name]: value,
-    });
-  };
-
-  const handleFormSubmit = async (event) => {
-    event.preventDefault();
-    console.log(formState);
-
-    try {
-      const { data } = await addUser({
-        variables: { ...formState },
-      });
-
-      Auth.login(data.addUser.token);
-    } catch (e) {
-      console.error(e);
-    }
-  };
-
+function SignLogin() {
+  const [signIn, toggle] = React.useState(true);
   return (
-    <main className="flex-row justify-center mb-4">
-      <div className="col-12 col-lg-10">
-        <div className="card">
-          <h4 className="card-header bg-dark text-light p-2">Sign Up</h4>
-          <div className="card-body">
-            {data ? (
-              <p>
-                Success! You may now head{' '}
-                <Link to="/">back to the homepage.</Link>
-              </p>
-            ) : (
-              <form onSubmit={handleFormSubmit}>
-                <input
-                  className="form-input"
-                  placeholder="Your username"
-                  name="username"
-                  type="text"
-                  value={formState.name}
-                  onChange={handleChange}
-                />
-                <input
-                  className="form-input"
-                  placeholder="Your email"
-                  name="email"
-                  type="email"
-                  value={formState.email}
-                  onChange={handleChange}
-                />
-                <input
-                  className="form-input"
-                  placeholder="******"
-                  name="password"
-                  type="password"
-                  value={formState.password}
-                  onChange={handleChange}
-                />
-                <button
-                  className="btn btn-block btn-primary"
-                  style={{ cursor: 'pointer' }}
-                  type="submit"
-                >
-                  Submit
-                </button>
-              </form>
-            )}
-
-            {error && (
-              <div className="my-3 p-3 bg-danger text-white">
-                {error.message}
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
-    </main>
+    <Components.Container>
+    <Components.SignUpContainer signingIn={signIn}>
+      <Components.Form>
+        <Components.Title>Create Account</Components.Title>
+        <Components.Input type="text" placeholder="Name" />
+        <Components.Input type="email" placeholder="Email" />
+        <Components.Input type="password" placeholder="Password" />
+        <Components.Button>Sign Up</Components.Button>
+      </Components.Form>
+    </Components.SignUpContainer>
+    <Components.SignInContainer signingIn={signIn}>
+      <Components.Form>
+        <Components.Title>Sign in</Components.Title>
+        <Components.Input type="email" placeholder="Email" />
+        <Components.Input type="password" placeholder="Password" />
+        <Components.Anchor href="#">Forgot your password?</Components.Anchor>
+        <Components.Button>Sign In</Components.Button>
+      </Components.Form>
+    </Components.SignInContainer>
+    <Components.OverlayContainer signingIn={signIn}>
+      <Components.Overlay signingIn={signIn}>
+        <Components.LeftOverlayPanel signingIn={signIn}>
+          <Components.Title>Welcome Back!</Components.Title>
+          <Components.Paragraph>
+            To keep connected with us please login with your personal info
+          </Components.Paragraph>
+          <Components.GhostButton onClick={() => toggle(true)}>
+            Sign In
+          </Components.GhostButton>
+        </Components.LeftOverlayPanel>
+        <Components.RightOverlayPanel signingIn={signIn}>
+          <Components.Title>Hello, Friend!</Components.Title>
+          <Components.Paragraph>
+            Enter your personal details and start journey with us
+          </Components.Paragraph>
+          <Components.GhostButton onClick={() => toggle(false)}>
+            Sign Up
+          </Components.GhostButton>
+        </Components.RightOverlayPanel>
+      </Components.Overlay>
+    </Components.OverlayContainer>
+  </Components.Container>
   );
-};
+}
 
-export default Signup;
+export default SignLogin;
