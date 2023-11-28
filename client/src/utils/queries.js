@@ -6,32 +6,32 @@ export const QUERY_USER = gql`
       _id
       username
       email
-      thoughts {
+      snaps {
         _id
-        thoughtText
+        snapTitle
         createdAt
       }
     }
   }
 `;
 
-export const QUERY_THOUGHTS = gql`
-  query getThoughts {
-    thoughts {
+export const QUERY_SNAPS = gql`
+  query getSnaps {
+    snaps {
       _id
-      thoughtText
-      thoughtAuthor
+      snapTitle
+      snapDepartment
       createdAt
     }
   }
 `;
 
 export const QUERY_SINGLE_THOUGHT = gql`
-  query getSingleThought($thoughtId: ID!) {
-    thought(thoughtId: $thoughtId) {
+  query getSingleSnap($snapId: ID!) {
+    snap(snapId: $snapId) {
       _id
-      thoughtText
-      thoughtAuthor
+      snapTitle
+      snapDepartment
       createdAt
       comments {
         _id
@@ -49,10 +49,10 @@ export const QUERY_ME = gql`
       _id
       username
       email
-      thoughts {
+      snaps {
         _id
-        thoughtText
-        thoughtAuthor
+        snapTitle
+        snapDepartment
         createdAt
       }
     }

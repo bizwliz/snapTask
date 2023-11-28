@@ -32,7 +32,7 @@ function ProductItem(item) {
     } else {
       dispatch({
         type: ADD_TO_CART,
-        product: { ...item, purchaseQuantity: 1 }
+        snap: { ...item, purchaseQuantity: 1 }
       });
       idbPromise('cart', 'put', { ...item, purchaseQuantity: 1 });
     }
@@ -40,7 +40,7 @@ function ProductItem(item) {
 
   return (
     <div className="card px-1 py-1">
-      <Link to={`/products/${_id}`}>
+      <Link to={`/snaps/${_id}`}>
         <img
           alt={name}
           src={`/images/${image}`}

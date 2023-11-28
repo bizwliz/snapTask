@@ -1,48 +1,49 @@
 import { Link } from 'react-router-dom';
 
 const ThoughtList = ({
-  thoughts,
+  snaps,
   title,
   showTitle = true,
   showUsername = true,
 }) => {
-  if (!thoughts.length) {
+  if (!snaps.length) {
     return <h3>No Thoughts Yet</h3>;
   }
 
   return (
     <div>
       {showTitle && <h3>{title}</h3>}
-      {thoughts &&
-        thoughts.map((thought) => (
-          <div key={thought._id} className="card mb-3">
+      {snaps &&
+        snaps.map((snap) => (
+          <div key={snap._id} className="card mb-3">
             <h4 className="card-header bg-primary text-light p-2 m-0">
               {showUsername ? (
                 <Link
                   className="text-light"
-                  to={`/profiles/${thought.thoughtAuthor}`}
+                  to={`/profiles/${snap.snapDepartment}`}
                 >
-                  {thought.thoughtAuthor} <br />
+                  {snap.snapDepartment} <br />
                   <span style={{ fontSize: '1rem' }}>
-                    had this thought on {thought.createdAt}
+                    had this snap on {snap.createdAt}
                   </span>
                 </Link>
               ) : (
                 <>
                   <span style={{ fontSize: '1rem' }}>
-                    You had this thought on {thought.createdAt}
+                    You had this snap on {snap.createdAt}
                   </span>
                 </>
               )}
             </h4>
             <div className="card-body bg-light p-2">
-              <p>{thought.thoughtText}</p>
+              <p>{snap.snapTitle}</p>
             </div>
             <Link
               className="btn btn-primary btn-block btn-squared"
-              to={`/thoughts/${thought._id}`}
+              to={`/snaps/${snap._id}`}
             >
-              Join the discussion on this thought.
+              Join the discussion on this snap.
+              
             </Link>
           </div>
         ))}

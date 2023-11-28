@@ -2,14 +2,14 @@ const { Schema, model } = require('mongoose');
 const dateFormat = require('../utils/dateFormat');
 
 const thoughtSchema = new Schema({
-  thoughtText: {
+  snapTitle: {
     type: String,
-    required: 'You need to leave a thought!',
+    required: 'You need to leave a snap!',
     minlength: 1,
     maxlength: 280,
     trim: true,
   },
-  thoughtAuthor: {
+  snapDepartment: {
     type: String,
     required: true,
     trim: true,

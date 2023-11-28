@@ -1,13 +1,13 @@
 import { useQuery } from '@apollo/client';
 
-import ThoughtList from '../components/ThoughtList';
-import ThoughtForm from '../components/ThoughtForm';
+import ThoughtList from '../components/SnapList';
+import SnapForm from '../components/SnapForm';
 
-import { QUERY_THOUGHTS } from '../utils/queries';
+import { QUERY_SNAPS } from '../utils/queries';
 
 const Home = () => {
-  const { loading, data } = useQuery(QUERY_THOUGHTS);
-  const thoughts = data?.thoughts || [];
+  const { loading, data } = useQuery(QUERY_SNAPS);
+  const snaps = data?.snaps || [];
 
   return (
     <main>
@@ -16,20 +16,21 @@ const Home = () => {
           className="col-12 col-md-10 mb-3 p-3"
           style={{ border: '1px dotted #1a1a1a' }}
         >
-          <ThoughtForm />
+          <SnapForm />
         </div>
         <div className="col-12 col-md-8 mb-3">
           {loading ? (
             <div>Loading...</div>
           ) : (
-            <ThoughtList
-              thoughts={thoughts}
+            <SnapList
+              snaps={snaps}
               title="Some Feed for Thought(s)..."
             />
           )}
         </div>
       </div>
     </main>
+    
   );
 };
 

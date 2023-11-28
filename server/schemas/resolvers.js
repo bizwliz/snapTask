@@ -4,21 +4,21 @@ const { signToken, AuthenticationError } = require('../utils/auth');
 const resolvers = {
   Query: {
     users: async () => {
-      return User.find().populate('thoughts');
+      return User.find().populate('snaps');
     },
     user: async (parent, { username }) => {
-      return User.findOne({ username }).populate('thoughts');
+      return User.findOne({ username }).populate('snaps');
     },
-    thoughts: async (parent, { username }) => {
+    snaps: async (parent, { username }) => {
       const params = username ? { username } : {};
       return Thought.find(params).sort({ createdAt: -1 });
     },
-    thought: async (parent, { thoughtId }) => {
-      return Thought.findOne({ _id: thoughtId });
+    snap: async (parent, { snapId }) => {
+      return Thought.findOne({ _id: snapId });
     },
     me: async (parent, args, context) => {
       if (context.user) {
-        return User.findOne({ _id: context.user._id }).populate('thoughts');
+        return User.findOne({ _id: context.user._id }).populate('snaps');
       }
       throw AuthenticationError;
     },
@@ -47,27 +47,27 @@ const resolvers = {
 
       return { token, user };
     },
-    addThought: async (parent, { thoughtText }, context) => {
+    addSnap: async (parent, { snapTitle }, context) => {
       if (context.user) {
-        const thought = await Thought.create({
-          thoughtText,
-          thoughtAuthor: context.user.username,
+        const snap = await Thought.create({
+          snapTitle,
+          snapDepartment: context.user.username,
         });
 
         await User.findOneAndUpdate(
           { _id: context.user._id },
-          { $addToSet: { thoughts: thought._id } }
+          { $addToSet: { snaps: snap._id } }
         );
 
-        return thought;
+        return snap;
       }
       throw AuthenticationError;
       ('You need to be logged in!');
     },
-    addComment: async (parent, { thoughtId, commentText }, context) => {
+    addComment: async (parent, { snapId, commentText }, context) => {
       if (context.user) {
         return Thought.findOneAndUpdate(
-          { _id: thoughtId },
+          { _id: snapId },
           {
             $addToSet: {
               comments: { commentText, commentAuthor: context.user.username },
@@ -81,26 +81,26 @@ const resolvers = {
       }
       throw AuthenticationError;
     },
-    removeThought: async (parent, { thoughtId }, context) => {
+    removeThought: async (parent, { snapId }, context) => {
       if (context.user) {
-        const thought = await Thought.findOneAndDelete({
-          _id: thoughtId,
-          thoughtAuthor: context.user.username,
+        const snap = await Thought.findOneAndDelete({
+          _id: snapId,
+          snapDepartment: context.user.username,
         });
 
         await User.findOneAndUpdate(
           { _id: context.user._id },
-          { $pull: { thoughts: thought._id } }
+          { $pull: { snaps: snap._id } }
         );
 
-        return thought;
+        return snap;
       }
       throw AuthenticationError;
     },
-    removeComment: async (parent, { thoughtId, commentId }, context) => {
+    removeComment: async (parent, { snapId, commentId }, context) => {
       if (context.user) {
         return Thought.findOneAndUpdate(
-          { _id: thoughtId },
+          { _id: snapId },
           {
             $pull: {
               comments: {

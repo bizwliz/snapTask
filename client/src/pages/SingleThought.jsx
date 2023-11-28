@@ -9,14 +9,14 @@ import { QUERY_SINGLE_THOUGHT } from '../utils/queries';
 
 const SingleThought = () => {
   // Use `useParams()` to retrieve value of the route parameter `:profileId`
-  const { thoughtId } = useParams();
+  const { snapId } = useParams();
 
   const { loading, data } = useQuery(QUERY_SINGLE_THOUGHT, {
     // pass URL parameter
-    variables: { thoughtId: thoughtId },
+    variables: { snapId: snapId },
   });
 
-  const thought = data?.thought || {};
+  const snap = data?.snap || {};
 
   if (loading) {
     return <div>Loading...</div>;
@@ -24,9 +24,9 @@ const SingleThought = () => {
   return (
     <div className="my-3">
       <h3 className="card-header bg-dark text-light p-2 m-0">
-        {thought.thoughtAuthor} <br />
+        {snap.snapDepartment} <br />
         <span style={{ fontSize: '1rem' }}>
-          had this thought on {thought.createdAt}
+          had this snap on {snap.createdAt}
         </span>
       </h3>
       <div className="bg-light py-4">
@@ -39,15 +39,15 @@ const SingleThought = () => {
             lineHeight: '1.5',
           }}
         >
-          {thought.thoughtText}
+          {snap.snapTitle}
         </blockquote>
       </div>
 
       <div className="my-5">
-        <CommentList comments={thought.comments} />
+        <CommentList comments={snap.comments} />
       </div>
       <div className="m-3 p-4" style={{ border: '1px dotted #1a1a1a' }}>
-        <CommentForm thoughtId={thought._id} />
+        <CommentForm snapId={snap._id} />
       </div>
     </div>
   );

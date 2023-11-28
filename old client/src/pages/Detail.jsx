@@ -22,34 +22,34 @@ function Detail() {
 
   const { loading, data } = useQuery(QUERY_PRODUCTS);
 
-  const { products, cart } = state;
+  const { snaps, cart } = state;
 
   useEffect(() => {
     // already in global store
-    if (products.length) {
-      setCurrentProduct(products.find((product) => product._id === id));
+    if (snaps.length) {
+      setCurrentProduct(snaps.find((snap) => snap._id === id));
     }
     // retrieved from server
     else if (data) {
       dispatch({
         type: UPDATE_PRODUCTS,
-        products: data.products,
+        snaps: data.snaps,
       });
 
-      data.products.forEach((product) => {
-        idbPromise('products', 'put', product);
+      data.snaps.forEach((snap) => {
+        idbPromise('snaps', 'put', snap);
       });
     }
     // get cache from idb
     else if (!loading) {
-      idbPromise('products', 'get').then((indexedProducts) => {
+      idbPromise('snaps', 'get').then((indexedProducts) => {
         dispatch({
           type: UPDATE_PRODUCTS,
-          products: indexedProducts,
+          snaps: indexedProducts,
         });
       });
     }
-  }, [products, data, loading, dispatch, id]);
+  }, [snaps, data, loading, dispatch, id]);
 
   const addToCart = () => {
     const itemInCart = cart.find((cartItem) => cartItem._id === id);
@@ -66,7 +66,7 @@ function Detail() {
     } else {
       dispatch({
         type: ADD_TO_CART,
-        product: { ...currentProduct, purchaseQuantity: 1 },
+        snap: { ...currentProduct, purchaseQuantity: 1 },
       });
       idbPromise('cart', 'put', { ...currentProduct, purchaseQuantity: 1 });
     }
@@ -85,7 +85,7 @@ function Detail() {
     <>
       {currentProduct && cart ? (
         <div className="container my-1">
-          <Link to="/">← Back to Products</Link>
+          <Link to="/">← Back to Snaps</Link>
 
           <h2>{currentProduct.name}</h2>
 
