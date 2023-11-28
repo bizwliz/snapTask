@@ -1,4 +1,4 @@
-const { User, Snap } = require('../models');
+const { User, Snap, Department } = require('../models');
 const { signToken, AuthenticationError } = require('../utils/auth');
 
 const resolvers = {
@@ -15,6 +15,12 @@ const resolvers = {
     },
     snap: async (parent, { snapId }) => {
       return Snap.findOne({ _id: snapId });
+    },
+    departments: async () => {
+      return Department.find();
+    },
+    department: async (parent, { departmentId }) => {
+      return Department.findOne({ _id: departmentId });
     },
     me: async (parent, args, context) => {
       if (context.user) {
@@ -47,11 +53,11 @@ const resolvers = {
 
       return { token, user };
     },
-    addSnap: async (parent, { snapTitle }, context) => {
+    addSnap: async (parent, { snapTitle, snapDepartment }, context) => {
       if (context.user) {
         const snap = await Snap.create({
           snapTitle,
-          snapDepartment: context.user.username,
+          snapDepartment,
         });
 
         await User.findOneAndUpdate(
@@ -62,7 +68,6 @@ const resolvers = {
         return snap;
       }
       throw AuthenticationError;
-      ('You need to be logged in!');
     },
     addComment: async (parent, { snapId, commentText }, context) => {
       if (context.user) {
@@ -80,6 +85,10 @@ const resolvers = {
         );
       }
       throw AuthenticationError;
+    },
+    addDepartment: async (parent, { name }) => {
+      const department = await Department.create({ snapDepartment: name });
+      return department;
     },
     removeSnap: async (parent, { snapId }, context) => {
       if (context.user) {

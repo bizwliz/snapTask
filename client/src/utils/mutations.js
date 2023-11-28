@@ -25,18 +25,18 @@ export const ADD_USER = gql`
 `;
 
 export const ADD_SNAP = gql`
-  mutation addSnap($snapTitle: String!) {
-    addSnap(snapTitle: $snapTitle) {
+mutation addSnap($snapTitle: String!, $snapDepartment: String!) {
+  addSnap(snapTitle: $snapTitle, snapDepartment: $snapDepartment) {
+    _id
+    snapTitle
+    snapDepartment
+    createdAt
+    comments {
       _id
-      snapTitle
-      snapDepartment
-      createdAt
-      comments {
-        _id
-        commentText
-      }
+      commentText
     }
   }
+}
 `;
 
 export const ADD_COMMENT = gql`
