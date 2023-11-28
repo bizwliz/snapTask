@@ -1,13 +1,13 @@
 import { Link } from 'react-router-dom';
 
-const ThoughtList = ({
+const SnapList = ({
   snaps,
   title,
   showTitle = true,
   showUsername = true,
 }) => {
   if (!snaps.length) {
-    return <h3>No Thoughts Yet</h3>;
+    return <h3>No Snaps Yet</h3>;
   }
 
   return (
@@ -43,7 +43,7 @@ const ThoughtList = ({
               to={`/snaps/${snap._id}`}
             >
               Join the discussion on this snap.
-              
+
             </Link>
           </div>
         ))}
@@ -51,4 +51,4 @@ const ThoughtList = ({
   );
 };
 
-export default ThoughtList;
+export default SnapList;

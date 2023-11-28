@@ -105,7 +105,7 @@ const SnapForm = () => {
 
             <div className="col-12 col-lg-3">
               <button className="btn btn-primary btn-block py-3" type="submit">
-                Add Thought
+                Add Snap
               </button>
             </div>
             {error && (

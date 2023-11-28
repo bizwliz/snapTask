@@ -4,10 +4,10 @@ const typeDefs = `
     username: String
     email: String
     password: String
-    snaps: [Thought]!
+    snaps: [Snap]!
   }
 
-  type Thought {
+  type Snap {
     _id: ID
     snapTitle: String
     snapDepartment: String
@@ -30,18 +30,18 @@ const typeDefs = `
   type Query {
     users: [User]
     user(username: String!): User
-    snaps(username: String): [Thought]
-    snap(snapId: ID!): Thought
+    snaps(username: String): [Snap]
+    snap(snapId: ID!): Snap
     me: User
   }
 
   type Mutation {
     addUser(username: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
-    addSnap(snapTitle: String!): Thought
-    addComment(snapId: ID!, commentText: String!): Thought
-    removeThought(snapId: ID!): Thought
-    removeComment(snapId: ID!, commentId: ID!): Thought
+    addSnap(snapTitle: String!): Snap
+    addComment(snapId: ID!, commentText: String!): Snap
+    removeSnap(snapId: ID!): Snap
+    removeComment(snapId: ID!, commentId: ID!): Snap
   }
 `;
 

@@ -1,7 +1,7 @@
 const { Schema, model } = require('mongoose');
 const dateFormat = require('../utils/dateFormat');
 
-const thoughtSchema = new Schema({
+const snapSchema = new Schema({
   snapTitle: {
     type: String,
     required: 'You need to leave a snap!',
@@ -40,6 +40,6 @@ const thoughtSchema = new Schema({
   ],
 });
 
-const Thought = model('Thought', thoughtSchema);
+const Snap = model('Snap', snapSchema);
 
-module.exports = Thought;
+module.exports = Snap;

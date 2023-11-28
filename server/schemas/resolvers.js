@@ -1,4 +1,4 @@
-const { User, Thought } = require('../models');
+const { User, Snap } = require('../models');
 const { signToken, AuthenticationError } = require('../utils/auth');
 
 const resolvers = {
@@ -11,10 +11,10 @@ const resolvers = {
     },
     snaps: async (parent, { username }) => {
       const params = username ? { username } : {};
-      return Thought.find(params).sort({ createdAt: -1 });
+      return Snap.find(params).sort({ createdAt: -1 });
     },
     snap: async (parent, { snapId }) => {
-      return Thought.findOne({ _id: snapId });
+      return Snap.findOne({ _id: snapId });
     },
     me: async (parent, args, context) => {
       if (context.user) {
@@ -49,7 +49,7 @@ const resolvers = {
     },
     addSnap: async (parent, { snapTitle }, context) => {
       if (context.user) {
-        const snap = await Thought.create({
+        const snap = await Snap.create({
           snapTitle,
           snapDepartment: context.user.username,
         });
@@ -66,7 +66,7 @@ const resolvers = {
     },
     addComment: async (parent, { snapId, commentText }, context) => {
       if (context.user) {
-        return Thought.findOneAndUpdate(
+        return Snap.findOneAndUpdate(
           { _id: snapId },
           {
             $addToSet: {
@@ -81,9 +81,9 @@ const resolvers = {
       }
       throw AuthenticationError;
     },
-    removeThought: async (parent, { snapId }, context) => {
+    removeSnap: async (parent, { snapId }, context) => {
       if (context.user) {
-        const snap = await Thought.findOneAndDelete({
+        const snap = await Snap.findOneAndDelete({
           _id: snapId,
           snapDepartment: context.user.username,
         });
@@ -99,7 +99,7 @@ const resolvers = {
     },
     removeComment: async (parent, { snapId, commentId }, context) => {
       if (context.user) {
-        return Thought.findOneAndUpdate(
+        return Snap.findOneAndUpdate(
           { _id: snapId },
           {
             $pull: {

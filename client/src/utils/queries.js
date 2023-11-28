@@ -26,7 +26,7 @@ export const QUERY_SNAPS = gql`
   }
 `;
 
-export const QUERY_SINGLE_THOUGHT = gql`
+export const QUERY_SINGLE_SNAP = gql`
   query getSingleSnap($snapId: ID!) {
     snap(snapId: $snapId) {
       _id
