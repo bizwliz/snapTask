@@ -31,7 +31,7 @@ const router = createBrowserRouter([
         path: '/me',
         element: <Profile />
       }, {
-        path: '/thoughts/:thoughtId',
+        path: '/snaps/:snapId',
         element: <SingleThought />
       }
     ]

@@ -1,8 +1,8 @@
 import { Navigate, useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 
-import ThoughtForm from '../components/ThoughtForm';
-import ThoughtList from '../components/ThoughtList';
+import SnapForm from '../components/SnapForm';
+import ThoughtList from '../components/SnapList';
 
 import { QUERY_USER, QUERY_ME } from '../utils/queries';
 
@@ -43,8 +43,8 @@ const Profile = () => {
 
         <div className="col-12 col-md-10 mb-5">
           <ThoughtList
-            thoughts={user.thoughts}
-            title={`${user.username}'s thoughts...`}
+            snaps={user.snaps}
+            title={`${user.username}'s snaps...`}
             showTitle={false}
             showUsername={false}
           />
@@ -54,7 +54,7 @@ const Profile = () => {
             className="col-12 col-md-10 mb-3 p-3"
             style={{ border: '1px dotted #1a1a1a' }}
           >
-            <ThoughtForm />
+            <SnapForm />
           </div>
         )}
       </div>

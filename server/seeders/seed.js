@@ -6,19 +6,19 @@ const cleanDB = require('./cleanDB');
 
 db.once('open', async () => {
   try {
-    await cleanDB('Thought', 'thoughts');
+    await cleanDB('Thought', 'snaps');
 
     await cleanDB('User', 'users');
 
     await User.create(userSeeds);
 
     for (let i = 0; i < thoughtSeeds.length; i++) {
-      const { _id, thoughtAuthor } = await Thought.create(thoughtSeeds[i]);
+      const { _id, snapDepartment } = await Thought.create(thoughtSeeds[i]);
       const user = await User.findOneAndUpdate(
-        { username: thoughtAuthor },
+        { username: snapDepartment },
         {
           $addToSet: {
-            thoughts: _id,
+            snaps: _id,
           },
         }
       );

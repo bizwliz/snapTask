@@ -15,37 +15,37 @@ export const reducer = (state, action) => {
     case UPDATE_PRODUCTS:
       return {
         ...state,
-        products: [...action.products],
+        snaps: [...action.snaps],
       };
 
     case ADD_TO_CART:
       return {
         ...state,
         cartOpen: true,
-        cart: [...state.cart, action.product],
+        cart: [...state.cart, action.snap],
       };
 
     case ADD_MULTIPLE_TO_CART:
       return {
         ...state,
-        cart: [...state.cart, ...action.products],
+        cart: [...state.cart, ...action.snaps],
       };
 
     case UPDATE_CART_QUANTITY:
       return {
         ...state,
         cartOpen: true,
-        cart: state.cart.map(product => {
-          if (action._id === product._id) {
-            product.purchaseQuantity = action.purchaseQuantity
+        cart: state.cart.map(snap => {
+          if (action._id === snap._id) {
+            snap.purchaseQuantity = action.purchaseQuantity
           }
-          return product
+          return snap
         })
       };
 
     case REMOVE_FROM_CART:
-      let newState = state.cart.filter(product => {
-        return product._id !== action._id;
+      let newState = state.cart.filter(snap => {
+        return snap._id !== action._id;
       });
 
       return {
@@ -70,7 +70,7 @@ export const reducer = (state, action) => {
     case UPDATE_CATEGORIES:
       return {
         ...state,
-        categories: [...action.categories],
+        departments: [...action.departments],
       };
 
     case UPDATE_CURRENT_CATEGORY:

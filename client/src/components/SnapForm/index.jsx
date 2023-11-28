@@ -2,21 +2,22 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 
-import { ADD_THOUGHT } from '../../utils/mutations';
-import { QUERY_THOUGHTS, QUERY_ME } from '../../utils/queries';
+import { ADD_SNAP } from '../../utils/mutations';
+import { QUERY_SNAPS, QUERY_ME } from '../../utils/queries';
 
 import Auth from '../../utils/auth';
 
-const ThoughtForm = () => {
-  const [thoughtText, setThoughtText] = useState('');
+const SnapForm = () => {
+  const [snapTitle, setSnapTitle] = useState('');
+  const [snapDepartment, setSnapDepartment] = useState('');
 
   const [characterCount, setCharacterCount] = useState(0);
 
-  const [addThought, { error }] = useMutation
-  (ADD_THOUGHT, {
+  const [addSnap, { error }] = useMutation
+  (ADD_SNAP, {
     refetchQueries: [
-      QUERY_THOUGHTS,
-      'getThoughts',
+      QUERY_SNAPS,
+      'getSnaps',
       QUERY_ME,
       'me'
     ]
@@ -26,24 +27,36 @@ const ThoughtForm = () => {
     event.preventDefault();
 
     try {
-      const { data } = await addThought({
+      const { data } = await addSnap({
         variables: {
-          thoughtText,
-          thoughtAuthor: Auth.getProfile().data.username,
+          snapTitle,
+          snapDepartment
+          // Auth.getProfile().data.username,
         },
       });
 
-      setThoughtText('');
+      setSnapTitle('');
     } catch (err) {
       console.error(err);
     }
+
+    
   };
 
   const handleChange = (event) => {
     const { name, value } = event.target;
 
-    if (name === 'thoughtText' && value.length <= 280) {
-      setThoughtText(value);
+    if (name === 'snapTitle' && value.length <= 280) {
+      setSnapTitle(value);
+      setCharacterCount(value.length);
+    }
+  };
+
+  const handleChange2 = (event) => {
+    const { name, value } = event.target;
+
+    if (name === 'snapDepartment' && value.length <= 280) {
+      setSnapDepartment(value);
       setCharacterCount(value.length);
     }
   };
@@ -67,14 +80,28 @@ const ThoughtForm = () => {
           >
             <div className="col-12 col-lg-9">
               <textarea
-                name="thoughtText"
-                placeholder="Here's a new thought..."
-                value={thoughtText}
+                name="snapTitle"
+                placeholder="Here's a new snap..."
+                value={snapTitle}
                 className="form-input w-100"
                 style={{ lineHeight: '1.5', resize: 'vertical' }}
                 onChange={handleChange}
               ></textarea>
+
+<textarea
+                name="snapDepartment"
+                placeholder="Here's a new snap..."
+                value={snapDepartment}
+                className="form-input w-100"
+                style={{ lineHeight: '1.5', resize: 'vertical' }}
+                onChange={handleChange2}
+              ></textarea>
+
+
+              
             </div>
+
+            
 
             <div className="col-12 col-lg-3">
               <button className="btn btn-primary btn-block py-3" type="submit">
@@ -90,7 +117,7 @@ const ThoughtForm = () => {
         </>
       ) : (
         <p>
-          You need to be logged in to share your thoughts. Please{' '}
+          You need to be logged in to share your snaps. Please{' '}
           <Link to="/login">login</Link> or <Link to="/signup">signup.</Link>
         </p>
       )}
@@ -98,4 +125,4 @@ const ThoughtForm = () => {
   );
 };
 
-export default ThoughtForm;
+export default SnapForm;

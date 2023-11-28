@@ -18,16 +18,16 @@ function ProductList() {
     if (data) {
       dispatch({
         type: UPDATE_PRODUCTS,
-        products: data.products,
+        snaps: data.snaps,
       });
-      data.products.forEach((product) => {
-        idbPromise('products', 'put', product);
+      data.snaps.forEach((snap) => {
+        idbPromise('snaps', 'put', snap);
       });
     } else if (!loading) {
-      idbPromise('products', 'get').then((products) => {
+      idbPromise('snaps', 'get').then((snaps) => {
         dispatch({
           type: UPDATE_PRODUCTS,
-          products: products,
+          snaps: snaps,
         });
       });
     }
@@ -35,32 +35,32 @@ function ProductList() {
 
   function filterProducts() {
     if (!currentCategory) {
-      return state.products;
+      return state.snaps;
     }
 
-    return state.products.filter(
-      (product) => product.category._id === currentCategory
+    return state.snaps.filter(
+      (snap) => snap.department._id === currentCategory
     );
   }
 
   return (
     <div className="my-2">
-      <h2>Our Products:</h2>
-      {state.products.length ? (
+      <h2>Our Snaps:</h2>
+      {state.snaps.length ? (
         <div className="flex-row">
-          {filterProducts().map((product) => (
+          {filterProducts().map((snap) => (
             <ProductItem
-              key={product._id}
-              _id={product._id}
-              image={product.image}
-              name={product.name}
-              price={product.price}
-              quantity={product.quantity}
+              key={snap._id}
+              _id={snap._id}
+              image={snap.image}
+              name={snap.name}
+              price={snap.price}
+              quantity={snap.quantity}
             />
           ))}
         </div>
       ) : (
-        <h3>You haven't added any products yet!</h3>
+        <h3>You haven't added any snaps yet!</h3>
       )}
       {loading ? <img src={spinner} alt="loading" /> : null}
     </div>

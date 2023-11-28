@@ -12,7 +12,7 @@ import {
 } from '../utils/actions';
 
 const initialState = {
-  products: [],
+  snaps: [],
   cart: [
     {
       _id: '1',
@@ -26,24 +26,24 @@ const initialState = {
     }
   ],
   cartOpen: false,
-  categories: [{ name: 'Food' }],
+  departments: [{ name: 'Food' }],
   currentCategory: '1',
 };
 
 test('UPDATE_PRODUCTS', () => {
   let newState = reducer(initialState, {
     type: UPDATE_PRODUCTS,
-    products: [{}, {}]
+    snaps: [{}, {}]
   });
 
-  expect(newState.products.length).toBe(2);
-  expect(initialState.products.length).toBe(0);
+  expect(newState.snaps.length).toBe(2);
+  expect(initialState.snaps.length).toBe(0);
 });
 
 test('ADD_TO_CART', () => {
   let newState = reducer(initialState, {
     type: ADD_TO_CART,
-    product: { purchaseQuantity: 1 }
+    snap: { purchaseQuantity: 1 }
   });
 
   expect(newState.cart.length).toBe(3);
@@ -87,7 +87,7 @@ test('REMOVE_FROM_CART', () => {
 test('ADD_MULTIPLE_TO_CART', () => {
   let newState = reducer(initialState, {
     type: ADD_MULTIPLE_TO_CART,
-    products: [{}, {}]
+    snaps: [{}, {}]
   });
 
   expect(newState.cart.length).toBe(4);
@@ -97,11 +97,11 @@ test('ADD_MULTIPLE_TO_CART', () => {
 test('UPDATE_CATEGORIES', () => {
   let newState = reducer(initialState, {
     type: UPDATE_CATEGORIES,
-    categories: [{}, {}]
+    departments: [{}, {}]
   });
 
-  expect(newState.categories.length).toBe(2);
-  expect(initialState.categories.length).toBe(1);
+  expect(newState.departments.length).toBe(2);
+  expect(initialState.departments.length).toBe(1);
 });
 
 test('UPDATE_CURRENT_CATEGORY', () => {

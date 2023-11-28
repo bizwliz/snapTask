@@ -11,7 +11,7 @@ import { idbPromise } from '../../utils/helpers';
 function CategoryMenu() {
   const [state, dispatch] = useStoreContext();
 
-  const { categories } = state;
+  const { departments } = state;
 
   const { loading, data: categoryData } = useQuery(QUERY_CATEGORIES);
 
@@ -19,16 +19,16 @@ function CategoryMenu() {
     if (categoryData) {
       dispatch({
         type: UPDATE_CATEGORIES,
-        categories: categoryData.categories,
+        departments: categoryData.departments,
       });
-      categoryData.categories.forEach((category) => {
-        idbPromise('categories', 'put', category);
+      categoryData.departments.forEach((department) => {
+        idbPromise('departments', 'put', department);
       });
     } else if (!loading) {
-      idbPromise('categories', 'get').then((categories) => {
+      idbPromise('departments', 'get').then((departments) => {
         dispatch({
           type: UPDATE_CATEGORIES,
-          categories: categories,
+          departments: departments,
         });
       });
     }
@@ -43,8 +43,8 @@ function CategoryMenu() {
 
   return (
     <div>
-      <h2>Choose a Category:</h2>
-      {categories.map((item) => (
+      <h2>Choose a Department:</h2>
+      {departments.map((item) => (
         <button
           key={item._id}
           onClick={() => {
