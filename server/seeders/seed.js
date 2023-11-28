@@ -1,5 +1,5 @@
 const db = require('../config/connection');
-const { User, Snap } = require('../models');
+const { User, Snap, Department } = require('../models');
 const userSeeds = require('./userSeeds.json');
 const snapSeeds = require('./snapSeeds.json');
 const cleanDB = require('./cleanDB');

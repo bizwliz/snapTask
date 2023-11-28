@@ -13,14 +13,8 @@ const SnapForm = () => {
 
   const [characterCount, setCharacterCount] = useState(0);
 
-  const [addSnap, { error }] = useMutation
-  (ADD_SNAP, {
-    refetchQueries: [
-      QUERY_SNAPS,
-      'getSnaps',
-      QUERY_ME,
-      'me'
-    ]
+  const [addSnap, { error }] = useMutation(ADD_SNAP, {
+    refetchQueries: [QUERY_SNAPS, 'getSnaps', QUERY_ME, 'me'],
   });
 
   const handleFormSubmit = async (event) => {
@@ -30,17 +24,15 @@ const SnapForm = () => {
       const { data } = await addSnap({
         variables: {
           snapTitle,
-          snapDepartment
-          // Auth.getProfile().data.username,
+          snapDepartment,
         },
       });
 
       setSnapTitle('');
+      setSnapDepartment(''); // Optionally reset snapDepartment after submission
     } catch (err) {
       console.error(err);
     }
-
-    
   };
 
   const handleChange = (event) => {
@@ -79,6 +71,17 @@ const SnapForm = () => {
             onSubmit={handleFormSubmit}
           >
             <div className="col-12 col-lg-9">
+
+            <textarea
+                name="snapDepartment"
+                placeholder="Enter Snap Department..."
+                value={snapDepartment}
+                className="form-input w-100"
+                style={{ lineHeight: '1.5', resize: 'vertical' }}
+                onChange={handleChange2}
+              ></textarea>
+            </div>
+
               <textarea
                 name="snapTitle"
                 placeholder="Here's a new snap..."
@@ -87,21 +90,6 @@ const SnapForm = () => {
                 style={{ lineHeight: '1.5', resize: 'vertical' }}
                 onChange={handleChange}
               ></textarea>
-
-<textarea
-                name="snapDepartment"
-                placeholder="Here's a new snap..."
-                value={snapDepartment}
-                className="form-input w-100"
-                style={{ lineHeight: '1.5', resize: 'vertical' }}
-                onChange={handleChange2}
-              ></textarea>
-
-
-              
-            </div>
-
-            
 
             <div className="col-12 col-lg-3">
               <button className="btn btn-primary btn-block py-3" type="submit">
