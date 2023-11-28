@@ -43,6 +43,7 @@ const ThoughtList = ({
               to={`/snaps/${snap._id}`}
             >
               Join the discussion on this snap.
+              
             </Link>
           </div>
         ))}
