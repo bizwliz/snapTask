@@ -5,13 +5,13 @@ import { useQuery } from '@apollo/client';
 import CommentList from '../components/CommentList';
 import CommentForm from '../components/CommentForm';
 
-import { QUERY_SINGLE_THOUGHT } from '../utils/queries';
+import { QUERY_SINGLE_SNAP } from '../utils/queries';
 
-const SingleThought = () => {
+const SingleSnap = () => {
   // Use `useParams()` to retrieve value of the route parameter `:profileId`
   const { snapId } = useParams();
 
-  const { loading, data } = useQuery(QUERY_SINGLE_THOUGHT, {
+  const { loading, data } = useQuery(QUERY_SINGLE_SNAP, {
     // pass URL parameter
     variables: { snapId: snapId },
   });
@@ -53,4 +53,4 @@ const SingleThought = () => {
   );
 };
 
-export default SingleThought;
+export default SingleSnap;

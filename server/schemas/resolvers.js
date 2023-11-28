@@ -1,4 +1,4 @@
-const { User, Thought } = require('../models');
+const { User, Snap, Department } = require('../models');
 const { signToken, AuthenticationError } = require('../utils/auth');
 
 const resolvers = {
@@ -11,10 +11,16 @@ const resolvers = {
     },
     snaps: async (parent, { username }) => {
       const params = username ? { username } : {};
-      return Thought.find(params).sort({ createdAt: -1 });
+      return Snap.find(params).sort({ createdAt: -1 });
     },
     snap: async (parent, { snapId }) => {
-      return Thought.findOne({ _id: snapId });
+      return Snap.findOne({ _id: snapId });
+    },
+    departments: async () => {
+      return Department.find();
+    },
+    department: async (parent, { departmentId }) => {
+      return Department.findOne({ _id: departmentId });
     },
     me: async (parent, args, context) => {
       if (context.user) {
@@ -47,11 +53,11 @@ const resolvers = {
 
       return { token, user };
     },
-    addSnap: async (parent, { snapTitle }, context) => {
+    addSnap: async (parent, { snapTitle, snapDepartment }, context) => {
       if (context.user) {
-        const snap = await Thought.create({
+        const snap = await Snap.create({
           snapTitle,
-          snapDepartment: context.user.username,
+          snapDepartment,
         });
 
         await User.findOneAndUpdate(
@@ -62,11 +68,10 @@ const resolvers = {
         return snap;
       }
       throw AuthenticationError;
-      ('You need to be logged in!');
     },
     addComment: async (parent, { snapId, commentText }, context) => {
       if (context.user) {
-        return Thought.findOneAndUpdate(
+        return Snap.findOneAndUpdate(
           { _id: snapId },
           {
             $addToSet: {
@@ -81,9 +86,13 @@ const resolvers = {
       }
       throw AuthenticationError;
     },
-    removeThought: async (parent, { snapId }, context) => {
+    addDepartment: async (parent, { name }) => {
+      const department = await Department.create({ snapDepartment: name });
+      return department;
+    },
+    removeSnap: async (parent, { snapId }, context) => {
       if (context.user) {
-        const snap = await Thought.findOneAndDelete({
+        const snap = await Snap.findOneAndDelete({
           _id: snapId,
           snapDepartment: context.user.username,
         });
@@ -99,7 +108,7 @@ const resolvers = {
     },
     removeComment: async (parent, { snapId, commentId }, context) => {
       if (context.user) {
-        return Thought.findOneAndUpdate(
+        return Snap.findOneAndUpdate(
           { _id: snapId },
           {
             $pull: {

@@ -1,19 +1,19 @@
 const db = require('../config/connection');
-const { User, Thought } = require('../models');
+const { User, Snap, Department } = require('../models');
 const userSeeds = require('./userSeeds.json');
-const thoughtSeeds = require('./thoughtSeeds.json');
+const snapSeeds = require('./snapSeeds.json');
 const cleanDB = require('./cleanDB');
 
 db.once('open', async () => {
   try {
-    await cleanDB('Thought', 'snaps');
+    await cleanDB('Snap', 'snaps');
 
     await cleanDB('User', 'users');
 
     await User.create(userSeeds);
 
-    for (let i = 0; i < thoughtSeeds.length; i++) {
-      const { _id, snapDepartment } = await Thought.create(thoughtSeeds[i]);
+    for (let i = 0; i < snapSeeds.length; i++) {
+      const { _id, snapDepartment } = await Snap.create(snapSeeds[i]);
       const user = await User.findOneAndUpdate(
         { username: snapDepartment },
         {

@@ -2,7 +2,7 @@ import { Navigate, useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 
 import SnapForm from '../components/SnapForm';
-import ThoughtList from '../components/SnapList';
+import SnapList from '../components/SnapList';
 
 import { QUERY_USER, QUERY_ME } from '../utils/queries';
 
@@ -42,7 +42,7 @@ const Profile = () => {
         </h2>
 
         <div className="col-12 col-md-10 mb-5">
-          <ThoughtList
+          <SnapList
             snaps={user.snaps}
             title={`${user.username}'s snaps...`}
             showTitle={false}
