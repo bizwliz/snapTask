@@ -1,6 +1,6 @@
 import { useQuery } from '@apollo/client';
 
-import ThoughtList from '../components/SnapList';
+import SnapList from '../components/SnapList';
 import SnapForm from '../components/SnapForm';
 
 import { QUERY_SNAPS } from '../utils/queries';
@@ -24,7 +24,7 @@ const Home = () => {
           ) : (
             <SnapList
               snaps={snaps}
-              title="Some Feed for Thought(s)..."
+              title="Some Feed for Snap(s)..."
             />
           )}
         </div>

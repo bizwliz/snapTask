@@ -22,7 +22,7 @@ const userSchema = new Schema({
   snaps: [
     {
       type: Schema.Types.ObjectId,
-      ref: 'Thought',
+      ref: 'Snap',
     },
   ],
 });
