@@ -8,6 +8,7 @@ import Login from './pages/Login';
 import SingleSnap from './pages/SingleSnap';
 import Profile from './pages/Profile';
 import ErrorPage from './pages/ErrorPage';
+import Project from "./pages/Project.jsx"
 
 const router = createBrowserRouter([
   {
@@ -21,6 +22,10 @@ const router = createBrowserRouter([
       }, {
         path: '/login',
         element: <Login />
+      },
+      {
+        path: '/project',
+        element: <Project />
       }, {
         path: '/signup',
         element: <Signup />
