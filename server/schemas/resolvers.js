@@ -1,118 +1,40 @@
-const { User, Product, Category, Order } = require('../models');
+const { User, Snap, Department } = require('../models');
 const { signToken, AuthenticationError } = require('../utils/auth');
-const stripe = require('stripe')('sk_test_4eC39HqLyjWDarjtT1zdp7dc');
 
 const resolvers = {
   Query: {
-    categories: async () => {
-      return await Category.find();
+    users: async () => {
+      return User.find().populate('snaps');
     },
-    products: async (parent, { category, name }) => {
-      const params = {};
-
-      if (category) {
-        params.category = category;
-      }
-
-      if (name) {
-        params.name = {
-          $regex: name
-        };
-      }
-
-      return await Product.find(params).populate('category');
+    user: async (parent, { username }) => {
+      return User.findOne({ username }).populate('snaps');
     },
-    product: async (parent, { _id }) => {
-      return await Product.findById(_id).populate('category');
+    snaps: async (parent, { username }) => {
+      const params = username ? { username } : {};
+      return Snap.find(params).sort({ createdAt: -1 });
     },
-    user: async (parent, args, context) => {
+    snap: async (parent, { snapId }) => {
+      return Snap.findOne({ _id: snapId });
+    },
+    departments: async () => {
+      return Department.find();
+    },
+    department: async (parent, { departmentId }) => {
+      return Department.findOne({ _id: departmentId });
+    },
+    me: async (parent, args, context) => {
       if (context.user) {
-        const user = await User.findById(context.user._id).populate({
-          path: 'orders.products',
-          populate: 'category'
-        });
-
-        user.orders.sort((a, b) => b.purchaseDate - a.purchaseDate);
-
-        return user;
+        return User.findOne({ _id: context.user._id }).populate('snaps');
       }
-
       throw AuthenticationError;
-    },
-    order: async (parent, { _id }, context) => {
-      if (context.user) {
-        const user = await User.findById(context.user._id).populate({
-          path: 'orders.products',
-          populate: 'category'
-        });
-
-        return user.orders.id(_id);
-      }
-
-      throw AuthenticationError;
-    },
-    checkout: async (parent, args, context) => {
-      const url = new URL(context.headers.referer).origin;
-      await Order.create({ products: args.products.map(({ _id }) => _id) });
-      // eslint-disable-next-line camelcase
-      const line_items = [];
-
-      // eslint-disable-next-line no-restricted-syntax
-      for (const product of args.products) {
-        line_items.push({
-          price_data: {
-            currency: 'usd',
-            product_data: {
-              name: product.name,
-              description: product.description,
-              images: [`${url}/images/${product.image}`]
-            },
-            unit_amount: product.price * 100,
-          },
-          quantity: product.purchaseQuantity,
-        });
-      }
-
-      const session = await stripe.checkout.sessions.create({
-        payment_method_types: ['card'],
-        line_items,
-        mode: 'payment',
-        success_url: `${url}/success?session_id={CHECKOUT_SESSION_ID}`,
-        cancel_url: `${url}/`,
-      });
-
-      return { session: session.id };
     },
   },
+
   Mutation: {
-    addUser: async (parent, args) => {
-      const user = await User.create(args);
+    addUser: async (parent, { username, email, password }) => {
+      const user = await User.create({ username, email, password });
       const token = signToken(user);
-
       return { token, user };
-    },
-    addOrder: async (parent, { products }, context) => {
-      if (context.user) {
-        const order = new Order({ products });
-
-        await User.findByIdAndUpdate(context.user._id, { $push: { orders: order } });
-
-        return order;
-      }
-
-      throw AuthenticationError;
-    },
-    updateUser: async (parent, args, context) => {
-      if (context.user) {
-        return await User.findByIdAndUpdate(context.user._id, args, { new: true });
-      }
-
-      throw AuthenticationError;
-    },
-    updateProduct: async (parent, { _id, quantity }) => {
-      const decrement = Math.abs(quantity) * -1;
-
-      return await Product.findByIdAndUpdate(_id, { $inc: { quantity: decrement } }, { new: true });
     },
     login: async (parent, { email, password }) => {
       const user = await User.findOne({ email });
@@ -130,8 +52,78 @@ const resolvers = {
       const token = signToken(user);
 
       return { token, user };
-    }
-  }
+    },
+    addSnap: async (parent, { snapTitle, snapDepartment }, context) => {
+      if (context.user) {
+        const snap = await Snap.create({
+          snapTitle,
+          snapDepartment,
+        });
+
+        await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $addToSet: { snaps: snap._id } }
+        );
+
+        return snap;
+      }
+      throw AuthenticationError;
+    },
+    addComment: async (parent, { snapId, commentText }, context) => {
+      if (context.user) {
+        return Snap.findOneAndUpdate(
+          { _id: snapId },
+          {
+            $addToSet: {
+              comments: { commentText, commentAuthor: context.user.username },
+            },
+          },
+          {
+            new: true,
+            runValidators: true,
+          }
+        );
+      }
+      throw AuthenticationError;
+    },
+    addDepartment: async (parent, { name }) => {
+      const department = await Department.create({ snapDepartment: name });
+      return department;
+    },
+    removeSnap: async (parent, { snapId }, context) => {
+      if (context.user) {
+        const snap = await Snap.findOneAndDelete({
+          _id: snapId,
+          snapDepartment: context.user.username,
+        });
+
+        await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $pull: { snaps: snap._id } }
+        );
+
+        return snap;
+      }
+      throw AuthenticationError;
+    },
+    removeComment: async (parent, { snapId, commentId }, context) => {
+      if (context.user) {
+        return Snap.findOneAndUpdate(
+          { _id: snapId },
+          {
+            $pull: {
+              comments: {
+                _id: commentId,
+                commentAuthor: context.user.username,
+              },
+            },
+          },
+          { new: true }
+        );
+      }
+      throw AuthenticationError;
+    },
+  },
 };
 
 module.exports = resolvers;

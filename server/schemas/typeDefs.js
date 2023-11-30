@@ -1,66 +1,56 @@
 const typeDefs = `
-  type Category {
-    _id: ID
-    name: String
-  }
-
-  type Product {
-    _id: ID
-    name: String
-    description: String
-    image: String
-    quantity: Int
-    price: Float
-    category: Category
-  }
-
-  type Order {
-    _id: ID
-    purchaseDate: String
-    products: [Product]
-  }
-
   type User {
     _id: ID
-    firstName: String
-    lastName: String
+    username: String
     email: String
-    orders: [Order]
+    password: String
+    snaps: [Snap]!
   }
 
-  type Checkout {
-    session: ID
+  type Snap {
+    _id: ID
+    snapTitle: String
+    snapDepartment: String
+    createdAt: String
+    comments: [Comment]!
+  }
+
+  type Comment {
+    _id: ID
+    commentText: String
+    commentAuthor: String
+    createdAt: String
+  }
+
+  type Department {
+    _id: ID!
+    snapDepartment: String!
   }
 
   type Auth {
-    token: ID
+    token: ID!
     user: User
-  }
-
-  input ProductInput {
-    _id: ID
-    purchaseQuantity: Int
-    name: String
-    image: String
-    price: Float
-    quantity: Int
   }
 
   type Query {
-    categories: [Category]
-    products(category: ID, name: String): [Product]
-    product(_id: ID!): Product
-    user: User
-    order(_id: ID!): Order
-    checkout(products: [ProductInput]): Checkout
+    users: [User]
+    user(username: String!): User
+    snaps(username: String): [Snap]
+    snap(snapId: ID!): Snap
+    departments: [Department]  
+    department(departmentId: ID!): Department
+    me: User
   }
 
+
   type Mutation {
-    addUser(firstName: String!, lastName: String!, email: String!, password: String!): Auth
-    addOrder(products: [ID]!): Order
-    updateUser(firstName: String, lastName: String, email: String, password: String): User
-    updateProduct(_id: ID!, quantity: Int!): Product
+    addUser(username: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
+    addSnap(snapTitle: String!, snapDepartment: String): Snap  # Modify to accept snapDepartment
+    addComment(snapId: ID!, commentText: String!): Snap
+    addDepartment(name: String!): Department  # Add a mutation for adding a department
+    removeSnap(snapId: ID!): Snap
+    removeComment(snapId: ID!, commentId: ID!): Snap
   }
 `;
 

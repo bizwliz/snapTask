@@ -1,69 +1,59 @@
 import { gql } from '@apollo/client';
 
-export const QUERY_PRODUCTS = gql`
-  query getProducts($category: ID) {
-    products(category: $category) {
-      _id
-      name
-      description
-      price
-      quantity
-      image
-      category {
-        _id
-      }
-    }
-  }
-`;
-
-export const QUERY_CHECKOUT = gql`
-  query getCheckout($products: [ProductInput]) {
-    checkout(products: $products) {
-      session
-    }
-  }
-`;
-
-export const QUERY_ALL_PRODUCTS = gql`
-  {
-    products {
-      _id
-      name
-      description
-      price
-      quantity
-      category {
-        name
-      }
-    }
-  }
-`;
-
-export const QUERY_CATEGORIES = gql`
-  {
-    categories {
-      _id
-      name
-    }
-  }
-`;
-
 export const QUERY_USER = gql`
-  {
-    user {
-      firstName
-      lastName
-      orders {
+  query user($username: String!) {
+    user(username: $username) {
+      _id
+      username
+      email
+      snaps {
         _id
-        purchaseDate
-        products {
-          _id
-          name
-          description
-          price
-          quantity
-          image
-        }
+        snapTitle
+        createdAt
+      }
+    }
+  }
+`;
+
+export const QUERY_SNAPS = gql`
+  query getSnaps {
+    snaps {
+      _id
+      snapTitle
+      snapDepartment
+      createdAt
+    }
+  }
+`;
+
+export const QUERY_SINGLE_SNAP = gql`
+  query getSingleSnap($snapId: ID!) {
+    snap(snapId: $snapId) {
+      _id
+      snapTitle
+      snapDepartment
+      createdAt
+      comments {
+        _id
+        commentText
+        commentAuthor
+        createdAt
+      }
+    }
+  }
+`;
+
+export const QUERY_ME = gql`
+  query me {
+    me {
+      _id
+      username
+      email
+      snaps {
+        _id
+        snapTitle
+        snapDepartment
+        createdAt
       }
     }
   }

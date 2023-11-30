@@ -1,50 +1,55 @@
 import { gql } from '@apollo/client';
 
-export const LOGIN = gql`
+export const LOGIN_USER = gql`
   mutation login($email: String!, $password: String!) {
     login(email: $email, password: $password) {
       token
       user {
         _id
-      }
-    }
-  }
-`;
-
-export const ADD_ORDER = gql`
-  mutation addOrder($products: [ID]!) {
-    addOrder(products: $products) {
-      purchaseDate
-      products {
-        _id
-        name
-        description
-        price
-        quantity
-        category {
-          name
-        }
+        username
       }
     }
   }
 `;
 
 export const ADD_USER = gql`
-  mutation addUser(
-    $firstName: String!
-    $lastName: String!
-    $email: String!
-    $password: String!
-  ) {
-    addUser(
-      firstName: $firstName
-      lastName: $lastName
-      email: $email
-      password: $password
-    ) {
+  mutation addUser($username: String!, $email: String!, $password: String!) {
+    addUser(username: $username, email: $email, password: $password) {
       token
       user {
         _id
+        username
+      }
+    }
+  }
+`;
+
+export const ADD_SNAP = gql`
+mutation addSnap($snapTitle: String!, $snapDepartment: String!) {
+  addSnap(snapTitle: $snapTitle, snapDepartment: $snapDepartment) {
+    _id
+    snapTitle
+    snapDepartment
+    createdAt
+    comments {
+      _id
+      commentText
+    }
+  }
+}
+`;
+
+export const ADD_COMMENT = gql`
+  mutation addComment($snapId: ID!, $commentText: String!) {
+    addComment(snapId: $snapId, commentText: $commentText) {
+      _id
+      snapTitle
+      snapDepartment
+      createdAt
+      comments {
+        _id
+        commentText
+        createdAt
       }
     }
   }

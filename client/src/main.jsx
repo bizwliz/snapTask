@@ -1,43 +1,49 @@
-import ReactDOM from 'react-dom/client'
-import './index.css'
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import ReactDOM from 'react-dom/client';
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import App from './App.jsx';
 import Home from './pages/Home';
-import Detail from './pages/Detail';
-import NoMatch from './pages/NoMatch';
-import Login from './pages/Login';
 import Signup from './pages/Signup';
-import Success from './pages/Success';
-import OrderHistory from './pages/OrderHistory';
+import Login from './pages/Login';
+import SingleSnap from './pages/SingleSnap';
+import Profile from './pages/Profile';
+import ErrorPage from './pages/ErrorPage';
+import Project from "./pages/Project.jsx"
 
 const router = createBrowserRouter([
   {
-    path: '/',
+    path: "/",
     element: <App />,
-    error: <NoMatch />,
+    errorElement: <ErrorPage />,
     children: [
-      {
-        index: true, 
-        element: <Home />
-      }, {
-        path: '/login',
+     {
+        index: 'true',
         element: <Login />
+      },
+      {
+        path: '/project',
+        element: <Project />
       }, {
         path: '/signup',
         element: <Signup />
       }, {
-        path: '/success',
-        element: <Success />
+        path: '/login',
+        element: <Login />
       }, {
-        path: '/orderHistory',
-        element: <OrderHistory />
+        path: '/profiles/:username',
+        element: <Profile />
       }, {
-        path: '/products/:id',
-        element: <Detail />
+        path: '/me',
+        element: <Profile />
+      }, {
+        path: '/snaps/:snapId',
+        element: <SingleSnap />
+      }, {
+        path: '/home',
+        element: <Home />
       }
     ]
-  }
+  },
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(

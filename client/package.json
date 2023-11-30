@@ -7,23 +7,20 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint src --ext js,jsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview",
-    "test": "vitest"
+    "preview": "vite preview"
   },
   "dependencies": {
-    "@apollo/client": "^3.7.15",
-    "@stripe/stripe-js": "^1.54.0",
-    "@testing-library/react": "^14.0.0",
+    "@apollo/client": "^3.7.14",
     "graphql": "^16.6.0",
-    "happy-dom": "^9.20.3",
     "jwt-decode": "^3.1.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-modal": "^3.16.1",
     "react-router-dom": "^6.11.2",
-    "vitest": "^0.31.4"
+    "styled-components": "^6.1.1"
   },
   "devDependencies": {
-    "@types/react": "^18.0.37",
+    "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",
     "@vitejs/plugin-react": "^4.0.0",
     "eslint": "^8.38.0",
