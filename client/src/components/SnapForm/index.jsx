@@ -55,7 +55,7 @@ const SnapForm = () => {
 
   return (
     <div>
-      <h3>What's on your techy mind?</h3>
+      <h3>Create your project, snap, and done!</h3>
 
       {Auth.loggedIn() ? (
         <>

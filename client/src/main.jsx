@@ -16,11 +16,8 @@ const router = createBrowserRouter([
     element: <App />,
     errorElement: <ErrorPage />,
     children: [
-      {
-        index: true,
-        element: <Project />
-      }, {
-        path: '/login',
+     {
+        index: 'true',
         element: <Login />
       },
       {
@@ -30,6 +27,9 @@ const router = createBrowserRouter([
         path: '/signup',
         element: <Signup />
       }, {
+        path: '/login',
+        element: <Login />
+      }, {
         path: '/profiles/:username',
         element: <Profile />
       }, {
@@ -38,6 +38,9 @@ const router = createBrowserRouter([
       }, {
         path: '/snaps/:snapId',
         element: <SingleSnap />
+      }, {
+        path: '/home',
+        element: <Home />
       }
     ]
   },
