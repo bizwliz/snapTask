@@ -72,24 +72,24 @@ const SnapForm = () => {
           >
             <div className="col-12 col-lg-9">
 
-            <textarea
+              <textarea
+                name="snapTitle"
+                placeholder="What is your snap name?"
+                value={snapTitle}
+                className="form-input w-100"
+                style={{ lineHeight: '1.5', resize: 'vertical' }}
+                onChange={handleChange}
+              ></textarea>
+
+                <textarea
                 name="snapDepartment"
-                placeholder="Enter Snap Department..."
+                placeholder="What is your snap about?"
                 value={snapDepartment}
                 className="form-input w-100"
                 style={{ lineHeight: '1.5', resize: 'vertical' }}
                 onChange={handleChange2}
               ></textarea>
             </div>
-
-              <textarea
-                name="snapTitle"
-                placeholder="Here's a new snap..."
-                value={snapTitle}
-                className="form-input w-100"
-                style={{ lineHeight: '1.5', resize: 'vertical' }}
-                onChange={handleChange}
-              ></textarea>
 
             <div className="col-12 col-lg-3">
               <button className="btn btn-primary btn-block py-3" type="submit">
