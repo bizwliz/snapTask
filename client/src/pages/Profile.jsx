@@ -45,8 +45,8 @@ const Profile = () => {
           <SnapList
             snaps={user.snaps}
             title={`${user.username}'s snaps...`}
-            showTitle={false}
-            showUsername={false}
+            showTitle={true}
+            showUsername={true}
           />
         </div>
         {!userParam && (
