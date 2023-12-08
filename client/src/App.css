@@ -883,7 +883,7 @@ a:hover {
 }
 
 .text-primary {
-  color: #2d3e50 !important;
+  color: #282634 !important;
 }
 
 .text-info {
@@ -920,7 +920,7 @@ a:hover {
 
 /* BACKGROUND UTILS */
 .bg-primary {
-  background-color: #2d3e50 !important;
+  background-color: #282634 !important;
 }
 
 .bg-info {
@@ -1012,7 +1012,7 @@ a:hover {
 }
 
 .btn.btn-primary {
-  background-color: #2d3e50;
+  background-color: #282634;
   color: #d9e9e8;
 }
 
@@ -1035,7 +1035,7 @@ a:hover {
 }
 
 .btn.btn-info:hover {
-  background-color: #31e1bd;
+  background-color: #ff4057;
 }
 
 .btn.btn-light {
@@ -1044,7 +1044,7 @@ a:hover {
 }
 
 .btn.btn-light:hover {
-  background-color: #84b8b4;
+  background-color: #ff4057;
 }
 
 .btn.btn-dark {
@@ -1090,7 +1090,7 @@ a:hover {
 
 .card .card-header {
   padding: 0.375rem;
-  background-color: #2d3e50;
+  background-color: #282634;
   color: #d9e9e8;
 }
 
