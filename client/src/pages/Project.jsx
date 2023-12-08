@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import CreateProjectModal from './ProjectModel';
+import CreateProjectModal from './projectModel';
 import ProjectList from './ProjectList';
-import './project.css';
+// import './project.css';
 
 const Project = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);

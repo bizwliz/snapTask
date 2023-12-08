@@ -42,6 +42,7 @@ const Login = (props) => {
 
   return (
     <main className="flex-row justify-center mb-4">
+
       <div className="col-12 col-lg-10">
         <div className="card">
           <h4 className="card-header bg-dark text-light p-2">Login</h4>
@@ -69,6 +70,17 @@ const Login = (props) => {
                   value={formState.password}
                   onChange={handleChange}
                 />
+                /* 
+
+                {
+                  <button 
+                  className="btn-box btn-1">
+                    submit
+                     </button>
+                     </form>
+                /* ==
+
+                
                 <button
                   className="btn btn-block btn-primary"
                   style={{ cursor: 'pointer' }}
@@ -76,17 +88,16 @@ const Login = (props) => {
                 >
                   Submit
                 </button>
-              </form>
-            )}
-
-            {error && (
-              <div className="my-3 p-3 bg-danger text-white">
-                {error.message}
+            </form> */}
+            )} */
+               {error && (
+                  <div className="my-3 p-3 bg-danger text-white">
+                    {error.message}
+                  </div>
+                )}
               </div>
-            )}
-          </div>
         </div>
-      </div>
+        </div>
     </main>
   );
 };
